@@ -1,0 +1,131 @@
+---
+// Ficha de un elemento con `detalle` (src/lib/paginas.ts, listas de src/data/fichas.ts): /muebles/<slug>/.
+// Diseño «estudio»: sobre la hoja de pruebas, migas en Geist, titular en Hedvig con guías naranjas, la frase, el precio
+// de partida y los botones; la foto principal muy ancha con marcas de corte. Debajo, banda clara con el `detalle` en
+// párrafos y, al lado, la hoja con los datos y la cita; las fotos de `imagenes`; y otros tipos de mueble.
+import Base from '../../layouts/Base.astro';
+import Imagen from '../../components/ui/Imagen.astro';
+import { site, tel, whatsapp } from '../../data/site';
+import { fichas, relacionadas, resumen } from '../../lib/paginas';
+import type { Ficha } from '../../lib/paginas';
+import { altGaleria, jsonLdFicha, jsonLdMigas, urlBase } from '../../lib/seo';
+import { enlace, rutaDeSeccion } from '../../lib/multipagina';
+
+export function getStaticPaths() {
+  return fichas().map((f) => ({ params: { coleccion: f.def.ruta, slug: f.slug }, props: { f } }));
+}
+
+interface Props { f: Ficha }
+const { f } = Astro.props;
+const base = urlBase(Astro.site);
+const nombreSeccion = String(f.seccion.titulo || f.seccion.antetitulo || f.def.nombre).trim();
+const migas = [
+  { nombre: 'Inicio', ruta: '/' },
+  { nombre: nombreSeccion, ruta: rutaDeSeccion(f.idSeccion) },
+  { nombre: f.titulo, ruta: f.url },
+];
+const c = site.contacto;
+const wa = whatsapp(c.whatsapp, `Hola, quiero información sobre ${f.titulo.toLowerCase()}`);
+const cita = site.boton_cabecera?.url
+  ? { texto: site.boton_cabecera.texto || 'Pide cita', url: enlace(site.boton_cabecera.url), fuera: /^https?:/.test(site.boton_cabecera.url) }
+  : wa
+    ? { texto: 'Pide cita por WhatsApp', url: wa, fuera: true }
+    : c.telefono
+      ? { texto: `Llamar al ${c.telefono}`, url: tel(c.telefono), fuera: false }
+      : { texto: 'Escríbenos', url: enlace('/#contacto'), fuera: false };
+const datos = f.datos.filter((d) => d.clave !== 'precio');
+const otras = relacionadas(f, 3);
+const descripcion = resumen(f.texto || f.detalle[0] || '');
+---
+
+<Base titulo={f.titulo} descripcion={descripcion} imagen={f.imagen} ld={[jsonLdMigas(base, migas), jsonLdFicha(base, f)]}>
+  <section class="portada prueba ficha-portada">
+    <div class="contenedor">
+      <nav aria-label="Migas de pan" class="migas menuda">
+        <ol>
+          {migas.map((m, i) => (
+            <li>{i < migas.length - 1 ? <a href={m.ruta}>{m.nombre}</a> : <span aria-current="page">{m.nombre}</span>}</li>
+          ))}
+        </ol>
+      </nav>
+      <div class="portada-texto ficha-texto">
+        <div class="portada-cabeza">
+          <h1 class="portada-titulo guias">{f.titulo}</h1>
+        </div>
+        <div class="portada-lado">
+          {f.texto && <p class="portada-parrafo">{f.texto}</p>}
+          {f.precio && <p class="precio ficha-precio">{f.precio}</p>}
+          <div class="botones">
+            <a class="btn" href={cita.url} {...(cita.fuera && { rel: 'noopener', target: '_blank' })}>{cita.texto}</a>
+            {c.telefono && <a class="btn-sec" href={tel(c.telefono)}>Llamar</a>}
+          </div>
+        </div>
+      </div>
+      {f.imagen && (
+        <div class="portada-foto ficha-foto foto crop crop--hoja">
+          <Imagen src={f.imagen} alt={f.titulo} ancho={1600} alto={700} prioridad />
+        </div>
+      )}
+    </div>
+  </section>
+
+  <section class="banda banda--clara">
+    <div class="contenedor ficha-cuerpo">
+      <article class="ficha-detalle">
+        {f.detalle.map((p) => <p>{p}</p>)}
+      </article>
+      <aside class="hoja crop crop--hoja ficha-lado">
+        <p class="ficha-lado-titulo">{f.titulo}</p>
+        {(datos.length > 0 || f.precio) && (
+          <table class="horario">
+            <caption class="sr-only">Datos de {f.titulo}</caption>
+            <tbody>
+              {f.precio && <tr><th scope="row">Precio</th><td>{f.precio}</td></tr>}
+              {datos.map((d) => <tr><th scope="row">{d.etiqueta}</th><td>{d.valor}</td></tr>)}
+            </tbody>
+          </table>
+        )}
+        <p class="ficha-lado-texto">Ven a verlo a la exposición o pide que vayamos a medir tu casa.</p>
+        <div class="botones">
+          <a class="btn" href={cita.url} {...(cita.fuera && { rel: 'noopener', target: '_blank' })}>{cita.texto}</a>
+          {wa && <a class="btn-sec" href={wa} rel="noopener" target="_blank">WhatsApp</a>}
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  {f.imagenes.length > 0 && (
+    <section class="banda banda--papel" aria-label={`Fotos de ${f.titulo}`}>
+      <div class="contenedor">
+        <ul class="ficha-fotos">
+          {f.imagenes.map((src, i) => (
+            <li class="foto crop"><Imagen src={src} alt={`${f.titulo}: ${altGaleria(i).toLowerCase()}`} ancho={1000} alto={750} /></li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  {otras.length > 0 && (
+    <section class="banda banda--papel">
+      <div class="contenedor">
+        <div class="cabeza">
+          <h2 class="titulo-seccion">También en la tienda</h2>
+          <p class="entrada"><a class="btn-sec" href={rutaDeSeccion(f.idSeccion)}>Ver todo</a></p>
+        </div>
+        <ul class="muebles">
+          {otras.map((o) => (
+            <li class="mueble mueble--fila3" style="--span:4">
+              {o.imagen && <div class="mueble-foto foto crop"><Imagen src={o.imagen} alt={o.titulo} ancho={900} alto={700} /></div>}
+              <div class="mueble-pie">
+                <h3 class="mueble-nombre"><a href={o.url}>{o.titulo}</a></h3>
+                {o.precio && <p class="precio">{o.precio}</p>}
+              </div>
+              {o.texto && <p class="mueble-texto">{o.texto}</p>}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+</Base>

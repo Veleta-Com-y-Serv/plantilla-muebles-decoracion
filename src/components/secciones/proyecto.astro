@@ -1,0 +1,31 @@
+---
+// «Tu proyecto, paso a paso» (`items` {titulo, texto, duracion}): la única banda de tinta (color primario). Cabeza
+// partida y los pasos como una cota de plano: una línea naranja de construcción con una marca al empezar cada paso,
+// la `duracion` leída sobre la línea (como una medida), el número en Hedvig Letters Serif, el paso y su línea.
+// En móvil, la cota baja en vertical. `cta` opcional debajo. Sin pasos, solo la cabeza.
+import { seccion, fuera } from '../../data/site';
+import Titular from '../ui/Titular.astro';
+import Banda from '../ui/Banda.astro';
+interface Props { id: string }
+const s = seccion(Astro.props.id);
+---
+
+{
+  s && (
+    <Banda id={Astro.props.id} color="tinta">
+      <Titular antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} cabeza />
+      {s.items.length > 0 && (
+        <ol class="cotas" style={`--n:${Math.min(s.items.length, 5)}`}>
+          {s.items.map((it) => (
+            <li class="cota">
+              <p class="cota-medida">{it.duracion}</p>
+              <h3 class="cota-titulo">{it.titulo}</h3>
+              {it.texto && <p class="cota-texto">{it.texto}</p>}
+            </li>
+          ))}
+        </ol>
+      )}
+      {s.cta?.url && <div class="botones"><a class="btn" href={s.cta.url} {...fuera(s.cta.url)}>{s.cta.texto}</a></div>}
+    </Banda>
+  )
+}

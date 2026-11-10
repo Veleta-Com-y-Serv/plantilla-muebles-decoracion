@@ -1,0 +1,63 @@
+---
+// «La exposición» (visita): mitad foto a sangre (`imagen`, hasta el borde de la ventana, a la izquierda) y mitad texto:
+// titular, frase, la dirección grande con enlace al mapa, el directorio de la tienda (`plantas` {nombre, texto}) como
+// filas bajo un filete de tinta, el horario (`horario` {dia, horas}) en una tabla con filetes y los botones (`cta` y
+// «Cómo llegar»). Sin foto, el texto ocupa el contenedor con el directorio y el horario a la derecha.
+import { seccion, site, mapa, fuera } from '../../data/site';
+import { altSeccion } from '../../lib/seo';
+import Titular from '../ui/Titular.astro';
+import Imagen from '../ui/Imagen.astro';
+interface Props { id: string }
+const s = seccion(Astro.props.id);
+const c = site.contacto;
+const cerrado = (h: string) => /^cerrado/i.test(h.trim());
+---
+
+{
+  s && (
+    <section id={Astro.props.id} class:list={['banda', 'banda--papel', 'banda--sin-relleno']}>
+      <div class:list={[s.imagen ? 'mitades mitades--foto-izq' : 'contenedor exposicion-sola']}>
+        {s.imagen && (
+          <div class="mitad-foto foto">
+            <Imagen src={s.imagen} alt={altSeccion(s)} ancho={1400} alto={1200} />
+          </div>
+        )}
+        <div class="mitad-texto exposicion">
+          <Titular antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} />
+          {c.direccion && (
+            <p class="direccion"><a href={mapa(c.direccion)} rel="noopener" target="_blank">{c.direccion}</a></p>
+          )}
+          {s.plantas.length > 0 && (
+            <ul class="directorio">
+              {s.plantas.map((p) => (
+                <li>
+                  <p class="directorio-planta">{p.nombre}</p>
+                  <p class="directorio-texto">{p.texto}</p>
+                </li>
+              ))}
+            </ul>
+          )}
+          {s.horario.length > 0 && (
+            <table class="horario">
+              <caption class="menuda">Horario</caption>
+              <tbody>
+                {s.horario.map((h) => (
+                  <tr class:list={{ cerrado: cerrado(h.horas) }}>
+                    <th scope="row">{h.dia}</th>
+                    <td>{h.horas}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+          {(s.cta?.url || c.direccion) && (
+            <div class="botones">
+              {s.cta?.url && <a class="btn" href={s.cta.url} {...fuera(s.cta.url)}>{s.cta.texto}</a>}
+              {c.direccion && <a class="btn-sec" href={mapa(c.direccion)} rel="noopener" target="_blank">Cómo llegar</a>}
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  )
+}

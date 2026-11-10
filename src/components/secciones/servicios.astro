@@ -1,0 +1,30 @@
+---
+// «Servicios» (`items` {titulo, texto, precio}): banda clara con la cabeza partida y los servicios como una tabla de
+// filas a todo el ancho bajo un filete de tinta: el nombre en Hedvig Letters Serif, lo que incluye y, a la derecha, la
+// condición o el precio («Gratis», «Incluido», «desde 30 €»). `cta` opcional debajo. Sin servicios, solo la cabeza.
+import { seccion, fuera } from '../../data/site';
+import Titular from '../ui/Titular.astro';
+import Banda from '../ui/Banda.astro';
+interface Props { id: string }
+const s = seccion(Astro.props.id);
+---
+
+{
+  s && (
+    <Banda id={Astro.props.id} color="clara">
+      <Titular antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} cabeza />
+      {s.items.length > 0 && (
+        <ul class="servicios">
+          {s.items.map((it) => (
+            <li>
+              <h3 class="servicio-nombre">{it.titulo}</h3>
+              <p class="servicio-texto">{it.texto}</p>
+              <p class="precio servicio-precio">{it.precio}</p>
+            </li>
+          ))}
+        </ul>
+      )}
+      {s.cta?.url && <div class="botones"><a class="btn" href={s.cta.url} {...fuera(s.cta.url)}>{s.cta.texto}</a></div>}
+    </Banda>
+  )
+}

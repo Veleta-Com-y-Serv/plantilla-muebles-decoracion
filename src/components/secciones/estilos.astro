@@ -1,0 +1,36 @@
+---
+// «Estilos y a medida» (`estilos` {nombre, texto, materiales, medida}): banda clara con la cabeza partida y los estilos
+// como hojas de muestra (papel claro, sombra de hoja y marcas de corte): el nombre grande en Hedvig Letters Serif, una
+// línea y dos datos con filetes («Materiales» y «A medida»). `nota` debajo, en una línea. Sin estilos, solo la cabeza.
+import { seccion } from '../../data/site';
+import Titular from '../ui/Titular.astro';
+import Banda from '../ui/Banda.astro';
+interface Props { id: string }
+const s = seccion(Astro.props.id);
+const estilos = s?.estilos ?? [];
+---
+
+{
+  s && (
+    <Banda id={Astro.props.id} color="clara">
+      <Titular antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} cabeza />
+      {estilos.length > 0 && (
+        <ul class="muestras" style={`--n:${Math.min(estilos.length, 4)}`}>
+          {estilos.map((e) => (
+            <li class="muestra hoja crop crop--hoja">
+              <h3 class="muestra-nombre">{e.nombre}</h3>
+              {e.texto && <p class="muestra-texto">{e.texto}</p>}
+              {(e.materiales || e.medida) && (
+                <dl class="muestra-datos">
+                  {e.materiales && <div><dt>Materiales</dt><dd>{e.materiales}</dd></div>}
+                  {e.medida && <div><dt>A medida</dt><dd>{e.medida}</dd></div>}
+                </dl>
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
+      {s.nota && <p class="nota-linea">{s.nota}</p>}
+    </Banda>
+  )
+}

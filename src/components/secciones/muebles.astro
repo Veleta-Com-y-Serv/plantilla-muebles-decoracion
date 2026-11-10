@@ -1,0 +1,75 @@
+---
+// «Muebles por estancia» (`muebles` {nombre, texto, precio, imagen, imagenes, detalle}): cabeza con filete de tinta y,
+// debajo, los tipos de mueble con foto en filas que alternan dos piezas (7 y 5 columnas, luego 5 y 7) y tres piezas
+// (4, 4 y 4); una pieza suelta al final va a todo el ancho. Cada foto con marcas de corte; debajo, el nombre en Hedvig,
+// el precio de partida a la derecha (cadena: «desde 690 €», «Consultar») y una línea. Los que tienen `detalle` enlazan
+// a su página (/muebles/<slug>/). Los que no tienen foto salen después como filas con filetes. Sin muebles, solo la cabeza.
+import { seccion } from '../../data/site';
+import type { Mueble } from '../../data/site';
+import { enlaceDe } from '../../lib/paginas';
+import { altFicha } from '../../lib/seo';
+import Titular from '../ui/Titular.astro';
+import Imagen from '../ui/Imagen.astro';
+import Banda from '../ui/Banda.astro';
+interface Props { id: string }
+const s = seccion(Astro.props.id);
+const todos = (s?.muebles ?? []) as Mueble[];
+const t = (v: unknown) => (v == null ? '' : String(v).trim());
+const conFoto = todos.filter((m) => t(m.imagen));
+const sinFoto = todos.filter((m) => !t(m.imagen));
+
+// Filas de 2 y 3 piezas alternas; el resto suelto se reparte para que no quede un hueco.
+type Pieza = { m: Mueble; span: number; fila: number };
+const filas: Pieza[][] = [];
+let i = 0;
+let par = 0;
+while (i < conFoto.length) {
+  const quedan = conFoto.length - i;
+  const tam = quedan === 1 ? 1 : filas.length % 2 === 0 ? 2 : 3;
+  const n = Math.min(tam, quedan);
+  const spans = n === 1 ? [12] : n === 2 ? (par++ % 2 === 0 ? [7, 5] : [5, 7]) : [4, 4, 4];
+  filas.push(conFoto.slice(i, i + n).map((m, k) => ({ m, span: spans[k], fila: n })));
+  i += n;
+}
+---
+
+{
+  s && (
+    <Banda id={Astro.props.id} color="papel">
+      <Titular antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} cabeza />
+      {filas.length > 0 && (
+        <ul class="muebles">
+          {filas.flat().map(({ m, span, fila }) => {
+            const url = enlaceDe(m);
+            return (
+              <li class:list={['mueble', `mueble--fila${fila}`]} style={`--span:${span}`}>
+                <div class="mueble-foto foto crop">
+                  <Imagen src={t(m.imagen)} alt={altFicha(m)} ancho={span >= 7 ? 1400 : 900} alto={span >= 7 ? 1000 : 700} />
+                </div>
+                <div class="mueble-pie">
+                  <h3 class="mueble-nombre">{url ? <a href={url}>{t(m.nombre)}</a> : t(m.nombre)}</h3>
+                  {t(m.precio) && <p class="precio">{t(m.precio)}</p>}
+                </div>
+                {t(m.texto) && <p class="mueble-texto">{t(m.texto)}</p>}
+              </li>
+            );
+          })}
+        </ul>
+      )}
+      {sinFoto.length > 0 && (
+        <ul class="filas filas--muebles">
+          {sinFoto.map((m) => {
+            const url = enlaceDe(m);
+            return (
+              <li>
+                <p class="filas-titulo">{url ? <a href={url}>{t(m.nombre)}</a> : t(m.nombre)}</p>
+                <p class="filas-texto">{t(m.texto)}</p>
+                <p class="precio">{t(m.precio)}</p>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </Banda>
+  )
+}

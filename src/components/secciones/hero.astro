@@ -1,0 +1,62 @@
+---
+// Portada «Ledge» sobre la hoja de pruebas (retícula de puntos y grano): arriba, una línea de folio bajo un filete de tinta
+// con el antetítulo a la izquierda y la dirección a la derecha; en medio, la foto del ambiente (`imagen`) muy ancha, con
+// marcas de corte en las esquinas y `pie_foto` como pie; abajo, apoyado en la base, el titular en Hedvig Letters Serif con
+// sus guías naranjas de construcción a la izquierda y, a la derecha, la frase y los dos botones impresos. Los `items`
+// (solo `titulo`) van como datos cortos en una fila con filetes. Sin `imagen`, la portada es solo texto, más grande.
+// Sin `cta`, el primer botón llama; sin `cta_secundario`, lleva al mapa.
+import { seccion, site, tel, mapa, fuera } from '../../data/site';
+import { altHero } from '../../lib/seo';
+import Imagen from '../ui/Imagen.astro';
+interface Props { id: string; primera?: boolean }
+const { id, primera = false } = Astro.props;
+const s = seccion(id);
+const c = site.contacto;
+const principal = s?.cta?.url ? s.cta : c.telefono ? { texto: `Llamar al ${c.telefono}`, url: tel(c.telefono) } : null;
+const secundario = s?.cta_secundario?.url ? s.cta_secundario : c.direccion ? { texto: 'Cómo llegar', url: mapa(c.direccion) } : null;
+const datos = (s?.items ?? []).map((it) => String(it?.titulo ?? '').trim()).filter(Boolean);
+---
+
+{
+  s && (
+    <section id={id} class:list={['portada', 'prueba', { 'portada--sin-foto': !s.imagen }]}>
+      <div class="contenedor">
+        {(s.antetitulo || c.direccion) && (
+          <div class="portada-folio">
+            {s.antetitulo ? <p class="antetitulo">{s.antetitulo}</p> : <span />}
+            {c.direccion && (
+              <a class="menuda portada-direccion" href={mapa(c.direccion)} rel="noopener" target="_blank">{c.direccion}</a>
+            )}
+          </div>
+        )}
+        {s.imagen && (
+          <figure class="portada-figura">
+            <div class="portada-foto foto crop crop--hoja">
+              <Imagen src={s.imagen} alt={altHero()} ancho={1600} alto={700} prioridad={primera} />
+            </div>
+            {s.pie_foto && <figcaption class="menuda pie-foto">{s.pie_foto}</figcaption>}
+          </figure>
+        )}
+        <div class="portada-texto">
+          <div class="portada-cabeza">
+            <h1 class="portada-titulo guias">{s.titulo || site.nombre}</h1>
+          </div>
+          <div class="portada-lado">
+            {s.texto && <p class="portada-parrafo">{s.texto}</p>}
+            {(principal || secundario) && (
+              <div class="botones">
+                {principal && <a class="btn" href={principal.url} {...fuera(principal.url)}>{principal.texto}</a>}
+                {secundario && <a class="btn-sec" href={secundario.url} {...fuera(secundario.url)}>{secundario.texto}</a>}
+              </div>
+            )}
+          </div>
+        </div>
+        {datos.length > 0 && (
+          <ul class="portada-datos">
+            {datos.map((d) => <li>{d}</li>)}
+          </ul>
+        )}
+      </div>
+    </section>
+  )
+}

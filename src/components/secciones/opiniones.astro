@@ -1,0 +1,38 @@
+---
+// «Opiniones» (`testimonios` {texto, autor, nota}): banda clara. La primera opinión como frase grande en Hedvig Letters
+// Serif con su autor debajo; el resto en columnas bajo un filete. Sin opiniones, no se pinta nada salvo el titular.
+// La plataforma deja este apartado desmarcado y vacío al crear una web: solo se enseñan las opiniones que pone el cliente.
+import { seccion } from '../../data/site';
+import Titular from '../ui/Titular.astro';
+import Banda from '../ui/Banda.astro';
+interface Props { id: string }
+const s = seccion(Astro.props.id);
+const [primera, ...resto] = s?.testimonios ?? [];
+const firma = (t: { autor: string; nota?: string }) => [t.autor, t.nota].filter(Boolean).join(', ');
+---
+
+{
+  s && (s.titulo || primera) && (
+    <Banda id={Astro.props.id} color="clara">
+      <div class="opiniones">
+        <Titular antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} />
+        {primera && (
+          <figure class="cita">
+            <blockquote><p>{primera.texto}</p></blockquote>
+            {firma(primera) && <figcaption class="menuda cita-autor">{firma(primera)}</figcaption>}
+          </figure>
+        )}
+      </div>
+      {resto.length > 0 && (
+        <ul class="opiniones-resto">
+          {resto.map((t) => (
+            <li>
+              <p class="opinion-texto">{t.texto}</p>
+              {firma(t) && <p class="menuda opinion-autor">{firma(t)}</p>}
+            </li>
+          ))}
+        </ul>
+      )}
+    </Banda>
+  )
+}

@@ -1,0 +1,33 @@
+---
+// «Preguntas frecuentes» (`preguntas` {pregunta, respuesta}): titular a la izquierda (se queda a la vista al bajar en
+// escritorio) y las preguntas como filas `details` con filetes a la derecha, la pregunta en Hedvig Letters Serif.
+// Es lo que citan los asistentes de IA (JSON-LD FAQPage en Base.astro). Sin preguntas, solo el titular.
+import { seccion } from '../../data/site';
+import Titular from '../ui/Titular.astro';
+import Banda from '../ui/Banda.astro';
+interface Props { id: string }
+const s = seccion(Astro.props.id);
+---
+
+{
+  s && (
+    <Banda id={Astro.props.id} color="papel">
+      <div class="preguntas-rejilla">
+        <Titular antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} />
+        {s.preguntas.length > 0 && (
+          <div>
+            {s.preguntas.map((p) => (
+              <details class="faq">
+                <summary>
+                  <span>{p.pregunta}</span>
+                  <span class="faq-signo" aria-hidden="true" />
+                </summary>
+                <p class="faq-respuesta">{p.respuesta}</p>
+              </details>
+            ))}
+          </div>
+        )}
+      </div>
+    </Banda>
+  )
+}

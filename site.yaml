@@ -1,0 +1,195 @@
+# Contenido de la web. Es lo único que rellena la plataforma NoExpertise.
+# Las secciones se muestran en el orden de este fichero. Para ocultar una: activa: false.
+# Apartado nuevo: un id propio (es su ancla, /#id) con `tipo:` = el diseño de otra sección o `texto`.
+nombre: Casa Vadillo
+eslogan: Muebles, decoración y descanso en Tudela.
+sector: muebles
+logo: ""          # ruta a una imagen en public/ (p. ej. /logo.svg). Vacío = nombre en texto.
+colores:
+  primario: "#162434"
+  acento: "#e97219"
+  fondo: "#f1f7f8"
+  texto: "#111c28"
+contacto:
+  telefono: "948 000 000"
+  email: hola@casavadillo.es
+  direccion: "Avenida de Zaragoza 48, 31500 Tudela (Navarra)"
+  horario: "Lunes a viernes, de 10:00 a 13:30 y de 16:30 a 20:00. Sábados, de 10:00 a 14:00 y de 17:00 a 20:30."
+  whatsapp: "+34 600 000 000"
+redes:
+  instagram: https://www.instagram.com/
+  facebook: https://www.facebook.com/
+  linkedin: ""
+menu:
+  - { texto: Muebles, url: "/#muebles" }
+  - { texto: Estilos, url: "/#estilos" }
+  - { texto: La exposición, url: "/#exposicion" }
+  - { texto: Servicios, url: "/#servicios" }
+  - { texto: Contacto, url: "/#contacto" }
+boton_cabecera: { texto: Pide cita, url: "/#contacto" }
+seo:
+  titulo: Casa Vadillo · Muebles, decoración y descanso en Tudela
+  descripcion: "Tienda de muebles en Tudela con 2.400 m² de exposición: salones, sofás, dormitorios, juveniles, colchones y cocinas, con medición, proyecto 3D y montaje."
+  tipo: FurnitureStore
+marca_pie: true
+
+secciones:
+  hero:
+    activa: true
+    antetitulo: Muebles, decoración y descanso en Tudela
+    titulo: Tres plantas de casas amuebladas.
+    texto: "Siéntate en los sofás y llévate tu salón medido y dibujado."
+    imagen: /fotos/portada.jpg
+    pie_foto: Salón en roble y lino, primera planta
+    cta: { texto: Pide cita para venir, url: "/#contacto" }
+    cta_secundario: { texto: Ver los muebles, url: "/#muebles" }
+    items:
+      - { titulo: "2.400 m² de exposición" }
+      - { titulo: Medición en casa sin coste }
+      - { titulo: Aparcamiento para clientes }
+
+  muebles:
+    activa: true
+    antetitulo: Lo que vendemos
+    titulo: Del salón al dormitorio
+    texto: "Muebles de fábricas españolas y portuguesas, en exposición y con medidas a elegir. Los precios son de partida: el tuyo te lo cerramos en el proyecto."
+    muebles:
+      - nombre: Salones y comedores
+        texto: "Composiciones de salón, aparadores, mesas extensibles y sillas a juego."
+        precio: "desde 890 €"
+        imagen: /fotos/salon.jpg
+        imagenes: "/fotos/salon.jpg; /fotos/ambiente-comedor.jpg"
+        detalle: |
+          En la planta baja tenemos montados una docena de salones completos: composiciones de pared con vitrina y hueco para la tele, aparadores bajos, mesas extensibles y sillas a juego. Están en roble, nogal y lacados mate, y casi todos se fabrican en otras medidas y acabados.
+
+          Lo habitual es que vengas con las medidas de la pared o que vayamos nosotros a tomarlas. Con eso te dibujamos el salón en planta y en 3D, con dos o tres opciones, para que veas cómo queda antes de decidir.
+
+          Las mesas extensibles las puedes abrir en la tienda y las sillas, probarlas en la mesa que vas a llevar. Si tienes una pieza que quieres conservar, la tenemos en cuenta en el proyecto para que todo encaje.
+      - nombre: Sofás y sillones
+        texto: "Sofás de dos y tres plazas, chaise longue, rinconeras y relax eléctricos."
+        precio: "desde 690 €"
+        imagen: /fotos/sofas.jpg
+        detalle: |
+          Tenemos más de treinta sofás en exposición para sentarse con calma: de dos y tres plazas, con chaise longue, rinconeras modulares y sillones relax con motor. Cada modelo se puede pedir en otras medidas y en un muestrario de más de cien telas, desde linos y chenillas hasta telas antimanchas para casas con niños o mascotas.
+
+          Te ayudamos a elegir la firmeza del asiento y el fondo que te conviene según tu altura y cómo usas el salón. Antes de pedirlo, medimos el hueco y también la puerta, el portal y el ascensor, para que el sofá llegue sin sorpresas.
+
+          El transporte y el montaje van incluidos en Tudela y la Ribera, y nos llevamos el sofá viejo si lo necesitas.
+      - nombre: Dormitorios
+        texto: "Camas, cabeceros, mesitas, cómodas y armarios de puertas correderas o batientes."
+        precio: "desde 1.150 €"
+        imagen: /fotos/dormitorio.jpg
+        detalle: |
+          En la primera planta están los dormitorios de matrimonio: camas con canapé o somier, cabeceros tapizados o de madera, mesitas, cómodas y sinfoniers. Los armarios se hacen a medida de tu hueco, con puertas correderas o batientes y el interior repartido como necesites.
+
+          Medimos la habitación, te dibujamos la distribución con las puertas y las ventanas y te damos el presupuesto cerrado con el montaje incluido. Si quieres aprovechar un cabecero o una cómoda que ya tienes, lo tenemos en cuenta en el plano.
+      - nombre: Juveniles e infantiles
+        texto: "Camas nido, literas, compactos con escritorio y armarios que crecen con ellos."
+        precio: "desde 790 €"
+        imagen: /fotos/juvenil.jpg
+      - nombre: Colchones y descanso
+        texto: "Colchones, bases, almohadas y canapés para probar tumbado, sin prisas."
+        precio: "desde 390 €"
+        imagen: /fotos/colchones.jpg
+        detalle: |
+          Un colchón hay que probarlo tumbado y con tiempo. En la zona de descanso tenemos colchones de muelles ensacados, viscoelásticos y de látex en varias firmezas, con sus bases, canapés abatibles y almohadas, para que los pruebes en la misma postura en la que duermes.
+
+          Te preguntamos cómo duermes, si compartes cama y si te levantas con dolores, y te enseñamos tres o cuatro opciones, no treinta. Las medidas especiales se piden a fábrica sin coste añadido en la mayoría de modelos.
+
+          Lo llevamos a casa, lo montamos sobre la base y nos llevamos el colchón viejo al punto limpio.
+      - nombre: Cocinas
+        texto: "Cocinas a medida con proyecto, encimeras, electrodomésticos y montaje."
+        precio: Consultar
+        imagen: /fotos/cocina.jpg
+      - { nombre: Muebles de exterior, texto: "Conjuntos de terraza, tumbonas y sombrillas para patios y balcones.", precio: "desde 450 €" }
+      - { nombre: "Iluminación, textil y cortinas", texto: "Lámparas, alfombras, cojines y cortinas confeccionadas a tu medida." }
+
+  estilos:
+    activa: true
+    antetitulo: Estilos y a medida
+    titulo: Cuatro estilos, medidas a elegir
+    texto: "Casi todo lo que ves se fabrica en otras medidas, maderas y telas. Lo que no, te lo decimos antes de pedirlo."
+    estilos:
+      - { nombre: Nórdico, texto: "Madera clara, líneas rectas y telas lisas en tonos suaves.", materiales: "Roble, fresno y lino", medida: "Medidas y telas a elegir" }
+      - { nombre: Contemporáneo, texto: "Lacados mate, metal negro y encimeras de piedra.", materiales: "Lacado, metal y cerámica", medida: "A medida en salones y armarios" }
+      - { nombre: Rústico actual, texto: "Maderas macizas con la veta a la vista y detalles de hierro.", materiales: "Pino macizo, nogal y hierro", medida: "Medidas de catálogo" }
+      - { nombre: Clásico renovado, texto: "Molduras suaves, patas torneadas y colores empolvados.", materiales: "Haya, terciopelo y latón", medida: "Telas y acabados a elegir" }
+    nota: "¿Buscas una pieza que no está en la tienda? La pedimos a fábrica y te damos la fecha de entrega antes de pagar."
+
+  exposicion:
+    activa: true
+    antetitulo: La exposición
+    titulo: Tres plantas para sentarse y probar
+    texto: "Aparca en la puerta y recorre la tienda a tu ritmo. Si pides cita, te atiende la persona que hará tu proyecto."
+    imagen: /fotos/exposicion.jpg
+    plantas:
+      - { nombre: Planta baja, texto: "Sofás, sillones, salones y comedores" }
+      - { nombre: Primera planta, texto: "Dormitorios, juveniles y zona de descanso con colchones para probar" }
+      - { nombre: Segunda planta, texto: "Cocinas, exterior, iluminación, textil y cortinas" }
+    horario:
+      - { dia: Lunes a viernes, horas: "10:00 a 13:30 y 16:30 a 20:00" }
+      - { dia: Sábados, horas: "10:00 a 14:00 y 17:00 a 20:30" }
+      - { dia: Domingos y festivos, horas: Cerrado }
+    cta: { texto: Pide cita, url: "/#contacto" }
+
+  servicios:
+    activa: true
+    antetitulo: Servicios
+    titulo: Lo que hacemos además de vender
+    texto: "Para que el mueble llegue bien, quepa por la puerta y quede montado como en la tienda."
+    items:
+      - { titulo: Medición en casa, texto: "Vamos con el metro, sin compromiso, en Tudela y toda la Ribera.", precio: Gratis }
+      - { titulo: Proyecto con plano y 3D, texto: "Te dibujamos la estancia con tus medidas y los muebles elegidos, para verla antes de comprar.", precio: Gratis con la compra }
+      - { titulo: Transporte y montaje, texto: "Nuestro equipo lo sube, lo monta, lo nivela y se lleva los embalajes.", precio: Incluido en la Ribera }
+      - { titulo: Retirada del mueble viejo, texto: "Nos llevamos al punto limpio el sofá, el colchón o el armario que cambias.", precio: "desde 30 €" }
+      - { titulo: Financiación, texto: "Paga en plazos con estudio en la tienda en unos minutos, sujeto a la aprobación de la financiera.", precio: Consultar }
+
+  proyecto:
+    activa: true
+    antetitulo: Proyecto de amueblamiento
+    titulo: Del metro al montaje
+    texto: "Así trabajamos un salón, un dormitorio o la casa entera."
+    items:
+      - { titulo: Visita la exposición, texto: "Vemos estilos y telas y nos cuentas cómo vivís en casa.", duracion: Una mañana }
+      - { titulo: Medimos en casa, texto: "Tomamos medidas de paredes, ventanas, enchufes y radiadores.", duracion: Una hora }
+      - { titulo: Plano y 3D, texto: "Te enseñamos la estancia dibujada con dos o tres opciones y el presupuesto cerrado.", duracion: En una semana }
+      - { titulo: Entrega y montaje, texto: "Lo llevamos, lo montamos y repasamos contigo cada mueble.", duracion: Según fábrica }
+    cta: { texto: Pide tu proyecto, url: "/#contacto" }
+
+  ambientes:
+    activa: true
+    antetitulo: Ambientes
+    titulo: Montados como una casa de verdad
+    texto: "Con su luz, sus cortinas y su alfombra, para que veas cómo queda todo junto."
+    galeria:
+      - /fotos/ambiente-comedor.jpg
+      - /fotos/ambiente-textil.jpg
+      - /fotos/ambiente-exterior.jpg
+    pies: "Comedor de roble con lámparas de lino, planta baja; Rincón de lectura con cortinas de hilo, segunda planta; Terraza con sofá de exterior, segunda planta"
+
+  opiniones:
+    activa: true
+    antetitulo: Opiniones
+    titulo: Lo que cuentan al volver
+    testimonios:
+      - { texto: "Nos midieron el salón, nos lo enseñaron en 3D y el sofá entró por la puerta a la primera. Montaron todo en una mañana.", autor: Marta y Javier, nota: Google }
+      - { texto: "Probé seis colchones tumbada y sin nadie metiéndome prisa. Duermo mejor desde entonces.", autor: Pilar G., nota: Google }
+      - { texto: "Hicimos el dormitorio de los chicos con armario a medida. Quedó aprovechado hasta el último hueco.", autor: Rubén A., nota: Facebook }
+
+  preguntas:
+    activa: true
+    antetitulo: Preguntas frecuentes
+    titulo: Antes de venir
+    texto: "Si tu duda no está aquí, llámanos o escríbenos por WhatsApp."
+    preguntas:
+      - { pregunta: "¿Hace falta pedir cita para ver la exposición?", respuesta: "No, abrimos sin cita. Con cita te atiende la persona que hará tu proyecto y te reservamos el tiempo que necesites." }
+      - { pregunta: "¿Cuánto tarda en llegar un mueble?", respuesta: "Lo que está en almacén, en una semana. Lo que se fabrica a medida, entre cuatro y ocho semanas según la fábrica. Te damos la fecha al hacer el pedido." }
+      - { pregunta: "¿El transporte y el montaje se pagan aparte?", respuesta: "En Tudela y en la Ribera van incluidos. Si vives más lejos, te lo decimos en el presupuesto antes de comprar." }
+      - { pregunta: "¿Puedo probar los colchones antes de comprar?", respuesta: "Sí. En la primera planta tienes la zona de descanso para probarlos tumbado y con calma, con almohada incluida." }
+      - { pregunta: "¿Se puede pagar a plazos?", respuesta: "Sí, con una financiera. El estudio se hace en la tienda en unos minutos y te decimos la cuota antes de firmar." }
+
+  contacto:
+    activa: true
+    antetitulo: Contacto
+    titulo: Pide cita o presupuesto
+    texto: "Cuéntanos qué estancia quieres amueblar y, si puedes, las medidas o un plano. Te contestamos en el día."

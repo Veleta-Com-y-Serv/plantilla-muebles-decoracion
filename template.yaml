@@ -1,0 +1,118 @@
+# Metadatos de la plantilla para el catálogo de NoExpertise.
+id: muebles-decoracion
+nombre: Muebles y decoración
+descripcion: "Web para tiendas de muebles con exposición: ambientes en grande, estilos, servicios y cita para venir."
+sectores:
+  - { id: muebles, nombre: Tienda de muebles }
+  - { id: decoracion, nombre: Decoración }
+  - { id: descanso, nombre: Colchones y descanso }
+  - { id: cocinas, nombre: Cocinas }
+  - { id: mueble-exterior, nombre: Muebles de exterior }
+secciones:
+  - { id: hero, nombre: Portada }
+  - { id: muebles, nombre: Muebles por estancia }
+  - { id: estilos, nombre: Estilos y a medida }
+  - { id: exposicion, nombre: La exposición }
+  - { id: servicios, nombre: Servicios }
+  - { id: proyecto, nombre: Tu proyecto paso a paso }
+  - { id: ambientes, nombre: Ambientes }
+  - { id: opiniones, nombre: Opiniones }
+  - { id: preguntas, nombre: Preguntas frecuentes }
+  - { id: contacto, nombre: Contacto }
+estilo: studio
+plan_minimo: gratis
+version: 1.0.0
+base: astrowind
+demo_url: https://demo-plantilla-muebles-decoracion.noexpertise.com
+activa: true
+orden: 810
+
+# Fichas por elemento (docs/plantillas.md § Fichas por elemento): cada tipo de mueble con `detalle` tiene su página en
+# /muebles/<slug>/. Espejo en src/data/fichas.ts. Sin zonas (es una tienda a la que se viene).
+fichas:
+  - { lista: muebles, campo: muebles, ruta: muebles, nombre: Tipo de mueble, tipo: Product }
+
+# Varias páginas (docs/plantillas.md § Varias páginas): reparto recomendado al activar «Varias páginas».
+# Inicio se queda con la portada y lo que no esté en ninguna página (aquí, los ambientes y las opiniones).
+paginas:
+  - { ruta: muebles, titulo: Muebles, secciones: "muebles; estilos" }
+  - { ruta: servicios, titulo: Servicios, secciones: "servicios; proyecto" }
+  - { ruta: visitanos, titulo: Visítanos, secciones: "exposicion; preguntas; contacto" }
+
+# Asistente de puesta en marcha (NoExpertise): un paso por pantalla. Rutas del site sin índices;
+# tipos: texto y lista (la IA propone), datos, fotos, eleccion (colores y logo) y repaso.
+asistente:
+  - id: negocio
+    titulo: "Tu tienda"
+    pregunta: "¿Cómo se llama tu tienda de muebles y qué la hace distinta?"
+    ayuda: "Por ejemplo: cuántas plantas o metros de exposición tenéis, si sois tienda familiar, qué vendéis más (sofás, dormitorios, colchones, cocinas) y en qué pueblo o ciudad estáis."
+    tipo: texto
+    campos: [nombre, eslogan, seo.titulo, seo.descripcion, secciones.hero.antetitulo, secciones.hero.titulo, secciones.hero.texto]
+  - id: contacto
+    titulo: "Cómo te encuentran"
+    pregunta: "¿Dónde está la exposición y cómo os pueden llamar o escribir para pedir cita?"
+    ayuda: "Solo lo que quieras que vean tus clientes. Si atendéis por WhatsApp, ponlo: saldrá un botón para pedir cita."
+    tipo: datos
+    campos: [contacto.telefono, contacto.whatsapp, contacto.email, contacto.direccion, contacto.horario, redes.instagram, redes.facebook]
+  - id: muebles
+    titulo: "Lo que vendéis"
+    pregunta: "¿Qué tipos de muebles vendéis? Uno por línea, con una frase y el precio de partida si quieres."
+    ayuda: "Por ejemplo: «Sofás y sillones, de dos y tres plazas, chaise longue y relax, desde 690 €», «Colchones y descanso», «Dormitorios», «Cocinas a medida». Luego puedes poner la foto de cada uno."
+    tipo: lista
+    campos: [secciones.muebles.muebles]
+  - id: estilos
+    titulo: "Estilos y a medida"
+    pregunta: "¿Qué estilos trabajáis y qué se puede hacer a medida? Un estilo por línea, con sus materiales."
+    ayuda: "Por ejemplo: «Nórdico: roble y lino, medidas y telas a elegir», «Rústico actual: pino macizo y hierro, medidas de catálogo». Si todo es de catálogo, dilo también."
+    tipo: lista
+    campos: [secciones.estilos.estilos]
+  - id: medida
+    titulo: "Lo que hacéis a medida"
+    pregunta: "¿Cómo trabajáis los encargos a medida o las piezas que no tenéis en la tienda?"
+    ayuda: "Por ejemplo: armarios a medida del hueco, sofás en otras medidas y más de cien telas, piezas que se piden a fábrica con fecha cerrada."
+    tipo: texto
+    campos: [secciones.estilos.titulo, secciones.estilos.texto, secciones.estilos.nota]
+  - id: exposicion
+    titulo: "La exposición"
+    pregunta: "¿Cómo es vuestra exposición? Cuéntame qué hay en cada planta o zona y si hay aparcamiento."
+    ayuda: "Por ejemplo: «Planta baja: sofás y salones; primera planta: dormitorios y colchones para probar». Si es una sola sala, cuéntalo por zonas."
+    tipo: texto
+    campos: [secciones.exposicion.titulo, secciones.exposicion.texto, secciones.exposicion.plantas]
+  - id: horario
+    titulo: "Horario"
+    pregunta: "¿Qué días y a qué horas abre la exposición?"
+    ayuda: "Por ejemplo: de lunes a viernes, de 10:00 a 13:30 y de 16:30 a 20:00; sábados por la mañana; domingos, cerrado."
+    tipo: lista
+    campos: [secciones.exposicion.horario]
+  - id: servicios
+    titulo: "Servicios"
+    pregunta: "¿Qué servicios dais además de vender? Uno por línea, y si es gratis, incluido o cuánto cuesta."
+    ayuda: "Por ejemplo: medición en casa (gratis), proyecto con plano y 3D, transporte y montaje (incluido), retirada del mueble viejo, financiación."
+    tipo: lista
+    campos: [secciones.servicios.items]
+  - id: proyecto
+    titulo: "Cómo hacéis un proyecto"
+    pregunta: "¿Qué pasos sigue un cliente que quiere amueblar un salón o una casa, desde que entra hasta el montaje?"
+    ayuda: "Por ejemplo: visita a la tienda, medimos en casa, plano y 3D con presupuesto cerrado, entrega y montaje. Si quieres, di cuánto suele tardar cada paso."
+    tipo: texto
+    campos: [secciones.proyecto.titulo, secciones.proyecto.texto, secciones.proyecto.items]
+  - id: preguntas
+    titulo: "Preguntas frecuentes"
+    pregunta: "¿Qué os preguntan más en la tienda o por teléfono? Escribe cada pregunta y lo que respondéis."
+    ayuda: "Por ejemplo: si hace falta cita, cuánto tarda un mueble, si el montaje se paga aparte, si se pueden probar los colchones o si se puede pagar a plazos."
+    tipo: lista
+    campos: [secciones.preguntas.preguntas]
+  - id: fotos
+    titulo: "Tus fotos"
+    pregunta: "Pon una foto de portada y, si quieres, la de la exposición y las de tus ambientes."
+    ayuda: "Sube las tuyas o elige una del banco. Las fotos de ambientes completos, con luz natural y tomadas a la altura de los ojos, quedan mejor. Las que no cambies se quedan como están."
+    tipo: fotos
+    campos: [secciones.hero.imagen, secciones.exposicion.imagen, secciones.ambientes.galeria]
+  - id: aspecto
+    titulo: "Colores y logo"
+    pregunta: "Elige los colores de tu web y, si tienes, tu logo."
+    tipo: eleccion
+    campos: [colores.primario, colores.acento, logo]
+  - id: repaso
+    titulo: "Repaso"
+    tipo: repaso

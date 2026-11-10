@@ -1,0 +1,65 @@
+---
+// «Ambientes» (`galeria`: rutas de fotos; `pies`: un pie por foto, separados por «;», opcional): escaparate de fotos.
+// Cabeza con filete de tinta; la primera foto a todo el contenedor en 21:9 y las siguientes de dos en dos (7 y 5
+// columnas, alternando; una suelta al final, a todo el ancho), todas con marcas de corte y su pie debajo. Cada pie
+// admite «Ambiente, planta» (lo que va tras la última coma sale a la derecha, apagado). Sin fotos, solo la cabeza.
+import { seccion } from '../../data/site';
+import { altGaleria } from '../../lib/seo';
+import Titular from '../ui/Titular.astro';
+import Imagen from '../ui/Imagen.astro';
+import Banda from '../ui/Banda.astro';
+interface Props { id: string }
+const s = seccion(Astro.props.id);
+const fotos = s?.galeria ?? [];
+const pies = String(s?.pies ?? '').split(/\s*[;\n]\s*/).map((p) => p.trim());
+const pie = (n: number) => {
+  const p = pies[n] ?? '';
+  const i = p.lastIndexOf(',');
+  return i > 0 ? { nombre: p.slice(0, i).trim(), dato: p.slice(i + 1).trim() } : { nombre: p, dato: '' };
+};
+const [primera, ...resto] = fotos;
+const spans = resto.map((_, k) => {
+  const par = Math.floor(k / 2) % 2 === 0;
+  const solo = k === resto.length - 1 && k % 2 === 0;
+  return solo ? 12 : k % 2 === 0 ? (par ? 7 : 5) : par ? 5 : 7;
+});
+const alt = (n: number) => pie(n).nombre || altGaleria(n);
+---
+
+{
+  s && (
+    <Banda id={Astro.props.id} color="papel">
+      <Titular antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} cabeza />
+      {primera && (
+        <figure class="ambiente ambiente--ancho">
+          <div class="ambiente-foto foto crop crop--hoja">
+            <Imagen src={primera} alt={alt(0)} ancho={1600} alto={686} />
+          </div>
+          {pie(0).nombre && (
+            <figcaption class="pie-foto">
+              <span>{pie(0).nombre}</span>
+              {pie(0).dato && <span class="pie-foto-dato">{pie(0).dato}</span>}
+            </figcaption>
+          )}
+        </figure>
+      )}
+      {resto.length > 0 && (
+        <div class="ambientes">
+          {resto.map((src, k) => (
+            <figure class="ambiente" style={`--span:${spans[k]}`}>
+              <div class="ambiente-foto foto crop">
+                <Imagen src={src} alt={alt(k + 1)} ancho={1100} alto={825} />
+              </div>
+              {pie(k + 1).nombre && (
+                <figcaption class="pie-foto">
+                  <span>{pie(k + 1).nombre}</span>
+                  {pie(k + 1).dato && <span class="pie-foto-dato">{pie(k + 1).dato}</span>}
+                </figcaption>
+              )}
+            </figure>
+          ))}
+        </div>
+      )}
+    </Banda>
+  )
+}
